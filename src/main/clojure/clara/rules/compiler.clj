@@ -4,6 +4,7 @@
    Most users should use only the clara.rules namespace."
   (:require [clara.rules.engine :as eng]
             [clara.rules.schema :as schema]
+            [clara.linter :as linter]
             [clojure.set :as set]
             [clojure.string :as string]
             [clojure.walk :as walk]
@@ -2098,6 +2099,7 @@
                           (mapcat #(if (satisfies? IRuleSource %)
                                      (load-rules %)
                                      %))
+                          linter/validate-productions
                           add-production-load-order
                           ;; Ensure that we choose the earliest occurrence of a rule for the purpose of rule order.
                           ;; There are Clojure core functions for distinctness, of course, but none of them seem to guarantee
